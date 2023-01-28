@@ -13,3 +13,9 @@ class loginform(FlaskForm):
     username = StringField("Username", validators = [DataRequired()])
     password = PasswordField("Password", validators = [DataRequired()])
     submit = SubmitField()
+
+class ItemSubmitForm(FlaskForm):
+    name = StringField("Name", validators = [DataRequired()])
+    img_url = StringField("Img_url", validators=[DataRequired()])
+    details = StringField("Details", validators=[DataRequired()])
+    submit = SubmitField()

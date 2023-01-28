@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1 class="text-center">Add Items to Shop</h1>
+<form methods = 'POST'>
+    {{ form.hidden_tag() }}
+    
+    {{ form.name(class='form-control', placeholder='Item Name') }}
+    {{ form.img_url(class='form-control', placeholder='Image URL') }}
+    {{ form.details(class='form-control', placeholder='Description of Product') }}
+
+    {{ form.submit(class='btn btn-primary') }}
+</form>
+
+
+
+{% endblock %}

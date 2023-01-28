@@ -1,7 +1,7 @@
 from app import app
 from flask import render_template, request, redirect, url_for
-from .forms import UserCreationForm, loginform
-from .models import User
+from .forms import UserCreationForm, loginform, ItemSubmitForm
+from .models import User, Item
 from flask_login import login_user, logout_user, current_user
 
 
@@ -41,7 +41,7 @@ def signUpPage():
 
 
 @app.route('/login' , methods=['GET','POST' ])
-def logintPage():
+def loginPage():
     form = loginform()
     if request.method == 'POST':
         if form.validate():
@@ -49,7 +49,7 @@ def logintPage():
             password = form.password.data
 
             #check is user with that username
-            user = User.query.filter_by(usernamne=username).first()
+            user = User.query.filter_by(username=username).first()
             # print(user)
             if user:
 
@@ -61,7 +61,7 @@ def logintPage():
                 else:
                     print("Wrong password")
             else:
-                print("user nonexsistance")
+                print("This user does not exist.")
 
 
 
@@ -73,3 +73,26 @@ def logintPage():
 def logout():
     logout_user
     return redirect(url_for('loginPage'))
+
+
+
+
+
+@app.route('/admin', methods=['GET', 'POST'])
+def adminPage():
+    form = ItemSubmitForm()
+    print(request.method)
+    if request.method == 'POST':
+        if form.validate():
+            name = form.name.data
+            img_url = form.img_url.data
+            details = form.details.data
+
+            item = Item(name, img_url, details)
+
+            item.saveToDB()
+
+            return redirect(url_for('adminPage'))
+
+    return render_template('admin.html', form=form)
+
